@@ -1,0 +1,10 @@
+__pycache__/
+*.py[cod]
+*.f16
+*.f32
+weights/
+vfms/
+*.safetensors
+*.pt
+*.npz
+.DS_Store

@@ -1,0 +1,27 @@
+[project]
+name = "comfyui-corridorkey2"
+description = "CorridorKey 2.0 (Corridor Digital) green/blue-screen keyer for ComfyUI: video-aware alpha + clean foreground, sRGB or scene-linear HDR, hints, auto VRAM."
+version = "1.0.0"
+license = { file = "LICENSE" }
+dependencies = [
+    "opencv-python>=4.11",
+    "transformers>=4.57",
+    "timm>=1.0",
+    "einops>=0.8",
+    "safetensors>=0.6",
+    "huggingface-hub>=0.36",
+    "scipy>=1.11",
+    "pillow>=10",
+    "tqdm>=4.66",
+]
+
+[project.urls]
+Repository = "https://github.com/miguelangelarribas/ComfyUI-CorridorKey2"
+Documentation = "https://github.com/miguelangelarribas/ComfyUI-CorridorKey2#readme"
+"Bug Tracker" = "https://github.com/miguelangelarribas/ComfyUI-CorridorKey2/issues"
+
+[tool.comfy]
+PublisherId = "miguelangelarribas"
+DisplayName = "CorridorKey 2.0"
+Icon = ""
+includes = []

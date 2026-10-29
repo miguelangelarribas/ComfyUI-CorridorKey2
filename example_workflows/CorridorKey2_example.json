@@ -1,0 +1,986 @@
+{
+ "id": "57b6b51b-8fb4-4c0c-9b36-8e4722d3e276",
+ "revision": 0,
+ "last_node_id": 11,
+ "last_link_id": 9,
+ "nodes": [
+  {
+   "id": 1,
+   "type": "Note",
+   "pos": [
+    40,
+    -260
+   ],
+   "size": [
+    620,
+    230
+   ],
+   "flags": {},
+   "order": 0,
+   "mode": 0,
+   "inputs": [],
+   "outputs": [],
+   "title": "CorridorKey 2.0 - how to use",
+   "properties": {},
+   "widgets_values": [
+    "1. Paste the path of your green-screen clip in \"Load Video (Path)\".\n   Linear EXR plates: use a Load Images (Path) node instead and set input_colorspace = linear.\n2. First run downloads ~5 GB of weights into models/corridorkey2/.\n3. Optional hint (white = subject): load a matte, convert it with \"Convert Image to Mask\"\n   and connect it to hint_mask. 1 frame = first-frame hint, N frames (= clip length) = per-frame hint.\n4. Outputs: foreground is straight (un-premultiplied); alpha is a MASK where 1 = subject.\n   ComfyUI's JoinImageWithAlpha inverts masks: put an InvertMask before it.\n5. For EXR/comp work set output_colorspace = linear (unclamped scene-linear)."
+   ],
+   "widgets_values_named": {
+    "text": "1. Paste the path of your green-screen clip in \"Load Video (Path)\".\n   Linear EXR plates: use a Load Images (Path) node instead and set input_colorspace = linear.\n2. First run downloads ~5 GB of weights into models/corridorkey2/.\n3. Optional hint (white = subject): load a matte, convert it with \"Convert Image to Mask\"\n   and connect it to hint_mask. 1 frame = first-frame hint, N frames (= clip length) = per-frame hint.\n4. Outputs: foreground is straight (un-premultiplied); alpha is a MASK where 1 = subject.\n   ComfyUI's JoinImageWithAlpha inverts masks: put an InvertMask before it.\n5. For EXR/comp work set output_colorspace = linear (unclamped scene-linear)."
+   },
+   "color": "#432",
+   "bgcolor": "#653"
+  },
+  {
+   "id": 2,
+   "type": "CorridorKey2ModelLoader",
+   "pos": [
+    40,
+    40
+   ],
+   "size": [
+    300.2134765625,
+    58
+   ],
+   "flags": {},
+   "order": 1,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "auto_download",
+     "name": "auto_download",
+     "type": "BOOLEAN",
+     "widget": {
+      "name": "auto_download"
+     },
+     "link": null
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "ck2_model",
+     "name": "ck2_model",
+     "type": "CORRIDORKEY2_MODEL",
+     "links": [
+      1
+     ]
+    }
+   ],
+   "properties": {
+    "ue_properties": {
+     "widget_ue_connectable": {},
+     "input_ue_unconnectable": {}
+    },
+    "Node name for S&R": "CorridorKey2ModelLoader"
+   },
+   "widgets_values": [
+    true
+   ],
+   "widgets_values_named": {
+    "auto_download": true
+   }
+  },
+  {
+   "id": 3,
+   "type": "VHS_LoadVideoPath",
+   "pos": [
+    40,
+    180
+   ],
+   "size": [
+    238.14453125,
+    286
+   ],
+   "flags": {},
+   "order": 2,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "meta_batch",
+     "name": "meta_batch",
+     "shape": 7,
+     "type": "VHS_BatchManager",
+     "link": null
+    },
+    {
+     "localized_name": "vae",
+     "name": "vae",
+     "shape": 7,
+     "type": "VAE",
+     "link": null
+    },
+    {
+     "localized_name": "video",
+     "name": "video",
+     "type": "STRING",
+     "widget": {
+      "name": "video"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "force_rate",
+     "name": "force_rate",
+     "type": "FLOAT",
+     "widget": {
+      "name": "force_rate"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "custom_width",
+     "name": "custom_width",
+     "type": "INT",
+     "widget": {
+      "name": "custom_width"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "custom_height",
+     "name": "custom_height",
+     "type": "INT",
+     "widget": {
+      "name": "custom_height"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "frame_load_cap",
+     "name": "frame_load_cap",
+     "type": "INT",
+     "widget": {
+      "name": "frame_load_cap"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "skip_first_frames",
+     "name": "skip_first_frames",
+     "type": "INT",
+     "widget": {
+      "name": "skip_first_frames"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "select_every_nth",
+     "name": "select_every_nth",
+     "type": "INT",
+     "widget": {
+      "name": "select_every_nth"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "format",
+     "name": "format",
+     "shape": 7,
+     "type": "COMBO",
+     "widget": {
+      "name": "format"
+     },
+     "link": null
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "IMAGE",
+     "name": "IMAGE",
+     "type": "IMAGE",
+     "links": [
+      2
+     ]
+    },
+    {
+     "localized_name": "frame_count",
+     "name": "frame_count",
+     "type": "INT",
+     "links": null
+    },
+    {
+     "localized_name": "audio",
+     "name": "audio",
+     "type": "AUDIO",
+     "links": null
+    },
+    {
+     "localized_name": "video_info",
+     "name": "video_info",
+     "type": "VHS_VIDEOINFO",
+     "links": null
+    }
+   ],
+   "title": "Green-screen clip",
+   "properties": {
+    "cnr_id": "comfyui-videohelpersuite",
+    "ver": "4d907bee61e92c2e65af3bd6383a4e4d356126d1",
+    "ue_properties": {
+     "widget_ue_connectable": {},
+     "input_ue_unconnectable": {}
+    },
+    "Node name for S&R": "VHS_LoadVideoPath"
+   },
+   "widgets_values": {
+    "video": "",
+    "force_rate": 0,
+    "custom_width": 0,
+    "custom_height": 0,
+    "frame_load_cap": 0,
+    "skip_first_frames": 0,
+    "select_every_nth": 1,
+    "format": "AnimateDiff",
+    "videopreview": {
+     "hidden": false,
+     "paused": false,
+     "params": {
+      "filename": "",
+      "type": "path",
+      "format": "video/",
+      "force_rate": 0,
+      "custom_width": 0,
+      "custom_height": 0,
+      "frame_load_cap": 0,
+      "skip_first_frames": 0,
+      "select_every_nth": 1
+     }
+    }
+   },
+   "widgets_values_named": {
+    "video": "",
+    "force_rate": 0,
+    "custom_width": 0,
+    "custom_height": 0,
+    "frame_load_cap": 0,
+    "skip_first_frames": 0,
+    "select_every_nth": 1,
+    "format": "AnimateDiff",
+    "videopreview": {
+     "hidden": false,
+     "paused": false,
+     "params": {
+      "filename": "",
+      "type": "path",
+      "format": "video/",
+      "force_rate": 0,
+      "custom_width": 0,
+      "custom_height": 0,
+      "frame_load_cap": 0,
+      "skip_first_frames": 0,
+      "select_every_nth": 1
+     }
+    }
+   }
+  },
+  {
+   "id": 4,
+   "type": "VHS_LoadImagesPath",
+   "pos": [
+    40,
+    640
+   ],
+   "size": [
+    247.98828125,
+    170
+   ],
+   "flags": {},
+   "order": 3,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "meta_batch",
+     "name": "meta_batch",
+     "shape": 7,
+     "type": "VHS_BatchManager",
+     "link": null
+    },
+    {
+     "localized_name": "directory",
+     "name": "directory",
+     "type": "STRING",
+     "widget": {
+      "name": "directory"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "image_load_cap",
+     "name": "image_load_cap",
+     "shape": 7,
+     "type": "INT",
+     "widget": {
+      "name": "image_load_cap"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "skip_first_images",
+     "name": "skip_first_images",
+     "shape": 7,
+     "type": "INT",
+     "widget": {
+      "name": "skip_first_images"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "select_every_nth",
+     "name": "select_every_nth",
+     "shape": 7,
+     "type": "INT",
+     "widget": {
+      "name": "select_every_nth"
+     },
+     "link": null
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "IMAGE",
+     "name": "IMAGE",
+     "type": "IMAGE",
+     "links": [
+      3
+     ]
+    },
+    {
+     "localized_name": "MASK",
+     "name": "MASK",
+     "type": "MASK",
+     "links": null
+    },
+    {
+     "localized_name": "frame_count",
+     "name": "frame_count",
+     "type": "INT",
+     "links": null
+    }
+   ],
+   "title": "Optional: hint matte (connect to hint_mask)",
+   "properties": {
+    "cnr_id": "comfyui-videohelpersuite",
+    "ver": "4d907bee61e92c2e65af3bd6383a4e4d356126d1",
+    "ue_properties": {
+     "widget_ue_connectable": {},
+     "input_ue_unconnectable": {}
+    },
+    "Node name for S&R": "VHS_LoadImagesPath"
+   },
+   "widgets_values": {
+    "directory": "",
+    "image_load_cap": 1,
+    "skip_first_images": 0,
+    "select_every_nth": 1,
+    "videopreview": {
+     "hidden": false,
+     "paused": false,
+     "params": {
+      "image_load_cap": 0,
+      "skip_first_images": 0,
+      "select_every_nth": 1
+     }
+    }
+   },
+   "widgets_values_named": {
+    "directory": "",
+    "image_load_cap": 1,
+    "skip_first_images": 0,
+    "select_every_nth": 1,
+    "videopreview": {
+     "hidden": false,
+     "paused": false,
+     "params": {
+      "image_load_cap": 0,
+      "skip_first_images": 0,
+      "select_every_nth": 1
+     }
+    }
+   }
+  },
+  {
+   "id": 5,
+   "type": "ImageToMask",
+   "pos": [
+    400,
+    700
+   ],
+   "size": [
+    270,
+    58
+   ],
+   "flags": {},
+   "order": 4,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "image",
+     "name": "image",
+     "type": "IMAGE",
+     "link": 3
+    },
+    {
+     "localized_name": "channel",
+     "name": "channel",
+     "type": "COMBO",
+     "widget": {
+      "name": "channel"
+     },
+     "link": null
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "MASK",
+     "name": "MASK",
+     "type": "MASK",
+     "links": null
+    }
+   ],
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.41.0",
+    "ue_properties": {
+     "widget_ue_connectable": {},
+     "input_ue_unconnectable": {}
+    },
+    "Node name for S&R": "ImageToMask"
+   },
+   "widgets_values": [
+    "red"
+   ],
+   "widgets_values_named": {
+    "channel": "red"
+   }
+  },
+  {
+   "id": 6,
+   "type": "CorridorKey2Keyer",
+   "pos": [
+    700,
+    120
+   ],
+   "size": [
+    270,
+    338
+   ],
+   "flags": {},
+   "order": 5,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "ck2_model",
+     "name": "ck2_model",
+     "type": "CORRIDORKEY2_MODEL",
+     "link": 1
+    },
+    {
+     "localized_name": "images",
+     "name": "images",
+     "type": "IMAGE",
+     "link": 2
+    },
+    {
+     "localized_name": "hint_mask",
+     "name": "hint_mask",
+     "shape": 7,
+     "type": "MASK",
+     "link": null
+    },
+    {
+     "localized_name": "input_colorspace",
+     "name": "input_colorspace",
+     "type": "COMBO",
+     "widget": {
+      "name": "input_colorspace"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "output_colorspace",
+     "name": "output_colorspace",
+     "type": "COMBO",
+     "widget": {
+      "name": "output_colorspace"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "despill_strength",
+     "name": "despill_strength",
+     "type": "FLOAT",
+     "widget": {
+      "name": "despill_strength"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "memory_mode",
+     "name": "memory_mode",
+     "type": "COMBO",
+     "widget": {
+      "name": "memory_mode"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "hann_chunk",
+     "name": "hann_chunk",
+     "type": "INT",
+     "widget": {
+      "name": "hann_chunk"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "hann_stride",
+     "name": "hann_stride",
+     "type": "INT",
+     "widget": {
+      "name": "hann_stride"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "hint_quality",
+     "name": "hint_quality",
+     "type": "FLOAT",
+     "widget": {
+      "name": "hint_quality"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "carry_hint",
+     "name": "carry_hint",
+     "type": "BOOLEAN",
+     "widget": {
+      "name": "carry_hint"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "carry_hint_quality",
+     "name": "carry_hint_quality",
+     "type": "FLOAT",
+     "widget": {
+      "name": "carry_hint_quality"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "stage2_batch",
+     "name": "stage2_batch",
+     "type": "INT",
+     "widget": {
+      "name": "stage2_batch"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "offload_after",
+     "name": "offload_after",
+     "type": "BOOLEAN",
+     "widget": {
+      "name": "offload_after"
+     },
+     "link": null
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "foreground",
+     "name": "foreground",
+     "type": "IMAGE",
+     "links": [
+      4,
+      7
+     ]
+    },
+    {
+     "localized_name": "alpha",
+     "name": "alpha",
+     "type": "MASK",
+     "links": [
+      5,
+      8
+     ]
+    }
+   ],
+   "properties": {
+    "ue_properties": {
+     "widget_ue_connectable": {},
+     "input_ue_unconnectable": {}
+    },
+    "Node name for S&R": "CorridorKey2Keyer"
+   },
+   "widgets_values": [
+    "sRGB",
+    "sRGB",
+    0.5,
+    "auto",
+    24,
+    0,
+    0.95,
+    true,
+    0.95,
+    1,
+    true
+   ],
+   "widgets_values_named": {
+    "input_colorspace": "sRGB",
+    "output_colorspace": "sRGB",
+    "despill_strength": 0.5,
+    "memory_mode": "auto",
+    "hann_chunk": 24,
+    "hann_stride": 0,
+    "hint_quality": 0.95,
+    "carry_hint": true,
+    "carry_hint_quality": 0.95,
+    "stage2_batch": 1,
+    "offload_after": true
+   }
+  },
+  {
+   "id": 7,
+   "type": "CorridorKey2CheckerPreview",
+   "pos": [
+    1150,
+    60
+   ],
+   "size": [
+    320.6939453125,
+    102
+   ],
+   "flags": {},
+   "order": 6,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "foreground",
+     "name": "foreground",
+     "type": "IMAGE",
+     "link": 4
+    },
+    {
+     "localized_name": "alpha",
+     "name": "alpha",
+     "type": "MASK",
+     "link": 5
+    },
+    {
+     "localized_name": "foreground_colorspace",
+     "name": "foreground_colorspace",
+     "type": "COMBO",
+     "widget": {
+      "name": "foreground_colorspace"
+     },
+     "link": null
+    },
+    {
+     "localized_name": "checker_size",
+     "name": "checker_size",
+     "type": "INT",
+     "widget": {
+      "name": "checker_size"
+     },
+     "link": null
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "preview",
+     "name": "preview",
+     "type": "IMAGE",
+     "links": [
+      6
+     ]
+    }
+   ],
+   "properties": {
+    "ue_properties": {
+     "widget_ue_connectable": {},
+     "input_ue_unconnectable": {}
+    },
+    "Node name for S&R": "CorridorKey2CheckerPreview"
+   },
+   "widgets_values": [
+    "sRGB",
+    32
+   ],
+   "widgets_values_named": {
+    "foreground_colorspace": "sRGB",
+    "checker_size": 32
+   }
+  },
+  {
+   "id": 8,
+   "type": "PreviewImage",
+   "pos": [
+    1500,
+    60
+   ],
+   "size": [
+    140,
+    26
+   ],
+   "flags": {},
+   "order": 7,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "images",
+     "name": "images",
+     "type": "IMAGE",
+     "link": 6
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "images",
+     "name": "images",
+     "type": "IMAGE",
+     "links": null
+    }
+   ],
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.41.0",
+    "ue_properties": {
+     "widget_ue_connectable": {},
+     "input_ue_unconnectable": {}
+    },
+    "Node name for S&R": "PreviewImage"
+   }
+  },
+  {
+   "id": 9,
+   "type": "SaveImage",
+   "pos": [
+    1150,
+    380
+   ],
+   "size": [
+    270,
+    58
+   ],
+   "flags": {},
+   "order": 8,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "images",
+     "name": "images",
+     "type": "IMAGE",
+     "link": 7
+    },
+    {
+     "localized_name": "filename_prefix",
+     "name": "filename_prefix",
+     "type": "STRING",
+     "widget": {
+      "name": "filename_prefix"
+     },
+     "link": null
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "images",
+     "name": "images",
+     "type": "IMAGE",
+     "links": null
+    }
+   ],
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.41.0",
+    "ue_properties": {
+     "widget_ue_connectable": {},
+     "input_ue_unconnectable": {}
+    },
+    "Node name for S&R": "SaveImage"
+   },
+   "widgets_values": [
+    "corridorkey2/fg"
+   ],
+   "widgets_values_named": {
+    "filename_prefix": "corridorkey2/fg"
+   }
+  },
+  {
+   "id": 10,
+   "type": "MaskToImage",
+   "pos": [
+    1150,
+    700
+   ],
+   "size": [
+    193.2779296875,
+    26
+   ],
+   "flags": {},
+   "order": 9,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "mask",
+     "name": "mask",
+     "type": "MASK",
+     "link": 8
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "IMAGE",
+     "name": "IMAGE",
+     "type": "IMAGE",
+     "links": [
+      9
+     ]
+    }
+   ],
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.41.0",
+    "ue_properties": {
+     "widget_ue_connectable": {},
+     "input_ue_unconnectable": {}
+    },
+    "Node name for S&R": "MaskToImage"
+   }
+  },
+  {
+   "id": 11,
+   "type": "SaveImage",
+   "pos": [
+    1500,
+    700
+   ],
+   "size": [
+    270,
+    58
+   ],
+   "flags": {},
+   "order": 10,
+   "mode": 0,
+   "inputs": [
+    {
+     "localized_name": "images",
+     "name": "images",
+     "type": "IMAGE",
+     "link": 9
+    },
+    {
+     "localized_name": "filename_prefix",
+     "name": "filename_prefix",
+     "type": "STRING",
+     "widget": {
+      "name": "filename_prefix"
+     },
+     "link": null
+    }
+   ],
+   "outputs": [
+    {
+     "localized_name": "images",
+     "name": "images",
+     "type": "IMAGE",
+     "links": null
+    }
+   ],
+   "properties": {
+    "cnr_id": "comfy-core",
+    "ver": "0.41.0",
+    "ue_properties": {
+     "widget_ue_connectable": {},
+     "input_ue_unconnectable": {}
+    },
+    "Node name for S&R": "SaveImage"
+   },
+   "widgets_values": [
+    "corridorkey2/alpha"
+   ],
+   "widgets_values_named": {
+    "filename_prefix": "corridorkey2/alpha"
+   }
+  }
+ ],
+ "links": [
+  [
+   1,
+   2,
+   0,
+   6,
+   0,
+   "CORRIDORKEY2_MODEL"
+  ],
+  [
+   2,
+   3,
+   0,
+   6,
+   1,
+   "IMAGE"
+  ],
+  [
+   3,
+   4,
+   0,
+   5,
+   0,
+   "IMAGE"
+  ],
+  [
+   4,
+   6,
+   0,
+   7,
+   0,
+   "IMAGE"
+  ],
+  [
+   5,
+   6,
+   1,
+   7,
+   1,
+   "MASK"
+  ],
+  [
+   6,
+   7,
+   0,
+   8,
+   0,
+   "IMAGE"
+  ],
+  [
+   7,
+   6,
+   0,
+   9,
+   0,
+   "IMAGE"
+  ],
+  [
+   8,
+   6,
+   1,
+   10,
+   0,
+   "MASK"
+  ],
+  [
+   9,
+   10,
+   0,
+   11,
+   0,
+   "IMAGE"
+  ]
+ ],
+ "groups": [],
+ "config": {},
+ "extra": {},
+ "version": 0.4
+}
